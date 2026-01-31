@@ -182,7 +182,9 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealElements.forEach((el, index) => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
-    el.style.transition = `opacity 0.3s ease ${index * 0.05}s, transform 0.3s ease ${index * 0.05}s`;
+    // Cap the delay to prevent late animations for elements further down the page
+    const delay = Math.min(index * 0.03, 0.15);
+    el.style.transition = `opacity 0.3s ease ${delay}s, transform 0.3s ease ${delay}s`;
     revealObserver.observe(el);
 });
 
